@@ -29,7 +29,7 @@ local esp = {
     maxdist = 0,
     settings = {
         name = {enabled = true, outline = true, displaynames = true, color = Color3fromRGB(255, 255, 255)},
-        box = {enabled = false, outline = true, color = Color3fromRGB(255, 255, 255)},
+        box = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
         filledbox = {enabled = true, outline = true, transparency = 0.5, color = Color3fromRGB(255, 255, 255)},
         healthbar = {enabled = true, size = 3, outline = true},
         healthtext = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
@@ -202,8 +202,8 @@ ESP_Loop = rs.RenderStepped:Connect(function()
                 end
 
                 if esp.settings.filledbox.enabled then
-                    v.filledbox.Size = BoxSize + Vector2.new(-1, 1)
-                    v.filledbox.Position = BoxPos + Vector2.new(1, -1)
+                    v.filledbox.Size = BoxSize + Vector2.new(-2, -2)
+                    v.filledbox.Position = BoxPos + Vector2.new(1, 1)
                     v.filledbox.Color = esp.settings.filledbox.color
                     v.filledbox.Transparency = esp.settings.filledbox.transparency
                     v.filledbox.Visible = true
