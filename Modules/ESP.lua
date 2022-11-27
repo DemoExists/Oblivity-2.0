@@ -22,19 +22,20 @@ local mathceil = math.ceil
 local esp = {
     players = {},
     objects = {},
-    enabled = false,
+    enabled = true,
     teamcheck = false,
     fontsize = 13,
     font = 2,
     maxdist = 0,
     settings = {
-        name = {enabled = false, outline = false, displaynames = false, color = Color3fromRGB(255, 255, 255)},
-        box = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
-        healthbar = {enabled = false, size = 3, outline = true},
-        healthtext = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
-        distance = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
-        viewangle = {enabled = false, size = 10, color = Color3fromRGB(255, 255, 255)},
-        weapon = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)}
+        name = {enabled = true, outline = true, displaynames = true, color = Color3fromRGB(255, 255, 255)},
+        box = {enabled = false, outline = true, color = Color3fromRGB(255, 255, 255)},
+        filledbox = {enabled = true, outline = true, transparency = 0.5, color = Color3fromRGB(255, 255, 255)},
+        healthbar = {enabled = true, size = 3, outline = true},
+        healthtext = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
+        distance = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
+        viewangle = {enabled = true, size = 10, color = Color3fromRGB(255, 255, 255)},
+        weapon = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)}
     },
     settings_chams = {
         enabled = false,
@@ -98,6 +99,7 @@ end
 esp.NewPlayer = function(v)
     esp.players[v] = {
         name = esp.NewDrawing("Text", {Color = Color3fromRGB(255, 255, 255), Outline = true, Center = true, Size = 13, Font = 2}),
+        filledbox = esp.NewDrawing("Square", {Color = Color3fromRGB(255, 255, 255), Thickness = 1, Filled = true}),
         boxOutline = esp.NewDrawing("Square", {Color = Color3fromRGB(0, 0, 0), Thickness = 3}),
         box = esp.NewDrawing("Square", {Color = Color3fromRGB(255, 255, 255), Thickness = 1}),
         healthBarOutline = esp.NewDrawing("Line", {Color = Color3fromRGB(0, 0, 0), Thickness = 3}),
@@ -199,6 +201,16 @@ ESP_Loop = rs.RenderStepped:Connect(function()
                     v.distance.Visible = false
                 end
 
+                if esp.settings.filledbox.enabled then
+                    v.filledbox.Size = BoxSize + Vector2.new(-1, 1)
+                    v.filledbox.Position = BoxPos + Vector2.new(1, -1)
+                    v.filledbox.Color = esp.settings.filledbox.color
+                    v.filledbox.Transparency = esp.settings.filledbox.transparency
+                    v.filledbox.Visible = true
+                else
+                    v.filledbox.Visible = false
+                end
+
                 if esp.settings.box.enabled then
                     v.boxOutline.Size = BoxSize
                     v.boxOutline.Position = BoxPos
@@ -270,6 +282,7 @@ ESP_Loop = rs.RenderStepped:Connect(function()
                     if esp.TeamCheck(i) then
                         v.name.Visible = esp.settings.name.enabled
                         v.box.Visible = esp.settings.box.enabled
+                        v.filledbox.Visible = esp.settings.box.enabled
                         v.healthBar.Visible = esp.settings.healthbar.enabled
                         v.healthText.Visible = esp.settings.healthtext.enabled
                         v.distance.Visible = esp.settings.distance.enabled
@@ -279,6 +292,7 @@ ESP_Loop = rs.RenderStepped:Connect(function()
                         v.name.Visible = false
                         v.boxOutline.Visible = false
                         v.box.Visible = false
+                        v.filledbox.Visible = false
                         v.healthBarOutline.Visible = false
                         v.healthBar.Visible = false
                         v.healthText.Visible = false
@@ -291,6 +305,7 @@ ESP_Loop = rs.RenderStepped:Connect(function()
                 v.name.Visible = false
                 v.boxOutline.Visible = false
                 v.box.Visible = false
+                v.filledbox.Visible = false
                 v.healthBarOutline.Visible = false
                 v.healthBar.Visible = false
                 v.healthText.Visible = false
@@ -302,6 +317,7 @@ ESP_Loop = rs.RenderStepped:Connect(function()
             v.name.Visible = false
             v.boxOutline.Visible = false
             v.box.Visible = false
+            v.filledbox.Visible = false
             v.healthBarOutline.Visible = false
             v.healthBar.Visible = false
             v.healthText.Visible = false
