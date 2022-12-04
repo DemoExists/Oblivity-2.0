@@ -22,20 +22,20 @@ local mathceil = math.ceil
 local esp = {
     players = {},
     objects = {},
-    enabled = true,
+    enabled = false,
     teamcheck = false,
     fontsize = 13,
     font = 2,
     maxdist = 0,
     settings = {
-        name = {enabled = true, outline = true, displaynames = true, color = Color3fromRGB(255, 255, 255)},
-        box = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
-        filledbox = {enabled = true, outline = true, transparency = 0.5, color = Color3fromRGB(255, 255, 255)},
-        healthbar = {enabled = true, size = 3, outline = true},
-        healthtext = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
-        distance = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
-        viewangle = {enabled = true, size = 10, color = Color3fromRGB(255, 255, 255)},
-        weapon = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)}
+        name = {enabled = false, outline = false, displaynames = false, color = Color3fromRGB(255, 255, 255)},
+        box = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
+        filledbox = {enabled = false, outline = false, transparency = 0.5, color = Color3fromRGB(255, 255, 255)},
+        healthbar = {enabled = false, size = 3, outline = false},
+        healthtext = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
+        distance = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
+        viewangle = {enabled = false, size = 10, color = Color3fromRGB(255, 255, 255)},
+        weapon = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)}
     },
     settings_chams = {
         enabled = false,
