@@ -22,20 +22,20 @@ local mathceil = math.ceil
 local esp = {
     players = {},
     objects = {},
-    enabled = false,
+    enabled = true,
     teamcheck = false,
     fontsize = 13,
     font = 2,
     maxdist = 0,
     settings = {
-        name = {enabled = false, outline = false, displaynames = false, color = Color3fromRGB(255, 255, 255)},
-        box = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
-        filledbox = {enabled = false, outline = false, transparency = 0.5, color = Color3fromRGB(255, 255, 255)},
-        healthbar = {enabled = false, size = 3, outline = false},
-        healthtext = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
-        distance = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)},
-        viewangle = {enabled = false, size = 10, color = Color3fromRGB(255, 255, 255)},
-        weapon = {enabled = false, outline = false, color = Color3fromRGB(255, 255, 255)}
+        name = {enabled = true, outline = true, displaynames = true, color = Color3fromRGB(255, 255, 255)},
+        box = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
+        filledbox = {enabled = true, outline = true, transparency = 0.5, color = Color3fromRGB(255, 255, 255)},
+        healthbar = {enabled = true, size = 3, outline = true},
+        healthtext = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
+        distance = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)},
+        viewangle = {enabled = true, size = 10, color = Color3fromRGB(255, 255, 255)},
+        weapon = {enabled = true, outline = true, color = Color3fromRGB(255, 255, 255)}
     },
     settings_chams = {
         enabled = false,
@@ -94,6 +94,10 @@ esp.TeamCheck = function(v)
     end
 
     return true
+end
+
+esp.GetEquippedTool = function(v)
+    return (v.Character:FindFirstChildOfClass("Tool") and tostring(v.Character:FindFirstChildOfClass("Tool"))) or "Hands"
 end
 
 esp.NewPlayer = function(v)
@@ -242,7 +246,7 @@ ESP_Loop = rs.RenderStepped:Connect(function()
                 end
 
                 if esp.settings.healthtext.enabled then
-                    v.healthText.Text = tostring(mathfloor((hum.Health / hum.MaxHealth) * 100 + 0.5))
+                    v.healthText.Text = tostring(mathfloor(hum.Health))
                     v.healthText.Position = Vector2new((BoxPos.X - 20), (BoxPos.Y + BoxSize.Y - 1 * BoxSize.Y) -1)
                     v.healthText.Color = esp.settings.healthtext.color
                     v.healthText.Outline = esp.settings.healthtext.outline
@@ -273,7 +277,7 @@ ESP_Loop = rs.RenderStepped:Connect(function()
                     v.weapon.Font = esp.font
                     v.weapon.Size = esp.fontsize
 
-                    v.weapon.Text = (i.Character:FindFirstChildOfClass("Tool") and tostring(i.Character:FindFirstChildOfClass("Tool"))) or "Hands"
+                    v.weapon.Text = esp.GetEquippedTool(i)
                 else
                     v.weapon.Visible = false
                 end
